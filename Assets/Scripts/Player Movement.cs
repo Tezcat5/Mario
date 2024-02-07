@@ -31,8 +31,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //teletransporta al personaje a la posicion de la variable newPosition    
         //transform.position = newPosition;
-
-        transform.position = transform.position + new Vector3 (1, 0, 0);
     }
 
     // Update is called once per frame
