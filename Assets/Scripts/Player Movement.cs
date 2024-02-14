@@ -12,12 +12,16 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator anim;
 
+    AudioSource source;
+
     public Vector3 newPosition = new Vector3 (58, 5, 0);
 
     public float movementSpeed = 5;
-    private float inputhorizontal;
     public float jumpForce = 10;
+    private float inputhorizontal;
     public bool jump = false;
+
+    public AudioClip jumpsound;
 
     void Awake ()
 {
@@ -25,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     rBody = GetComponent<Rigidbody2D>();
     render = GetComponent<SpriteRenderer>();
     anim = GetComponent<Animator>();
+    source = GetComponent<AudioSource>();
 }
     // Start is called before the first frame update
     void Start()
@@ -56,11 +61,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetButtonDown("Jump") && sensor.isGrounded == true)
         {
-            if(sensor.isGrounded == true)
-            {
+            
                 rBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 anim.SetBool("IsJumping", true);
-            }
+                source.PlayOneShot(jumpsound);
         }
 
         if (inputhorizontal < 0)

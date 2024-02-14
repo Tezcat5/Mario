@@ -10,10 +10,18 @@ public class Enemy : MonoBehaviour
 
     public float enemyDirection = 1;
 
+    public AudioClip deathSound;
+
+    public BoxCollider2D boxCollider;
+
+    AudioSource source;
+
     // Start is called before the first frame update
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
+        source = GetComponent<AudioSource>();
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -24,7 +32,7 @@ public class Enemy : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.layer == 3)
+        if(collision.gameObject.layer == 3 || collision.gameObject.tag == "Goombas")
         {
             if(enemyDirection == 1)
             {
@@ -41,4 +49,19 @@ public class Enemy : MonoBehaviour
             Destroy(collision.gameObject);
         }
     }
+    
+
+    public void GoombaDeath()
+    {    
+        source.PlayOneShot(deathSound);
+        boxCollider.enabled = false;
+        rBody.gravityScale = 0;
+        enemyDirection = 0;
+        Destroy(gameObject, 0.5f);
+    }
+
+
+
 }
+
+
